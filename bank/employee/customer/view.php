@@ -31,7 +31,8 @@ include("../auth.php");
 <tbody>
 <?php
 $count=1;
-$sel_query="Select * from `customer`;";
+$employeeID = $_SESSION['employeeID'];
+$sel_query="Select * from `customer` where employeeID = $employeeID;";
 $result = mysqli_query($con,$sel_query);
 while($row = mysqli_fetch_assoc($result)) { 
     ?>

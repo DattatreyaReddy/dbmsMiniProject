@@ -17,7 +17,7 @@ if(isset($_POST['new']) && $_POST['new']==1){
     if (!$rows){
     $status = "Customer Name & password already exists.Please Try again";
     }else{
-        $status = "New Employee Data Recorded Successfully.";
+        $status = "New Customer Data Recorded Successfully.";
     }
 
 }

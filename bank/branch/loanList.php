@@ -25,15 +25,17 @@ include("auth.php");
 <th><strong>Loan Sanctioned Date</strong></th>
 <th><strong>Loan Sanctioned amount</strong></th>
 <th><strong>Loan Balance Amount</strong></th>
+<th><strong>Sanctioned By</strong></th>
 
 </tr>
 </thead>
 <tbody>
 <?php
 $count=1;
-$sel_query="select * from customer join accountDetails join loan on 
+$branchId = $_SESSION['branchID'];
+$sel_query="select * from customer join accountDetails join loan join employee on 
                 customer.customerID = accountDetails.customerID and 
-                loan.accountID = accountDetails.accountID;";
+                loan.accountID = accountDetails.accountID and employee.employeeID =customer.employeeID and employee.branchID = $branchId;";
 $result = mysqli_query($con,$sel_query);
 $tot_query = "select sum(amount) as totalAmount from loan;";
 $result1 = mysqli_query($con,$tot_query);
@@ -48,12 +50,13 @@ while($row = mysqli_fetch_assoc($result)) {
 <td align="center"><?php echo $row["sanctionDate"]; ?></td>
 <td align="center"><?php echo $row["amountSanctioned"]; ?></td>
 <td align="center"><?php echo $row["amount"]; ?></td>
+<td align="center"><?php echo $row["employeeName"]; ?></td>
 <td align="center">
 </tr>
 <?php $count++; } ?>
 </tbody>
 </table>
-<h2>Total Balance loan amount of Customers - Rs.<?php echo $row2['totalAmount'];?></h2>
+<h2>Total Balance loan amount of Customers - Rs.<?php if ($row2['totalAmount'] > 0) {echo $row2['totalAmount'];}else{echo '0';}?></h2>
 <br><a href="dashboard.php">Go back</a>
 </div>
 </body>
